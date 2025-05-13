@@ -1,28 +1,44 @@
 pipeline {
     agent any
 
+    environment {
+        NODE_ENV = 'production'
+    }
+
     stages {
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
                 git 'https://github.com/Santha45/Loginapp.git'
             }
         }
-
-        stage('Build Docker Image') {
+        stage('Install Dependencies') {
             steps {
-                script {
-                    dockerImage = docker.build("login-app")
-                }
+                sh 'npm install'
             }
         }
-
-        stage('Run Container') {
+        stage('Build') {
             steps {
-                script {
-                    sh 'docker rm -f login-app || true'
-                    dockerImage.run("-d -p 3000:3000 --name login-app")
-                }
+                sh 'npm run build'
             }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Build failed. Please check the logs.'
         }
     }
 }

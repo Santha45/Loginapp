@@ -1,68 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-        if (!localStorage.getItem("loggedIn")) {
-          window.location.href = "login.html";
-        }
-      </script>
-      
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Dream Wheels</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background: #222;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: #111;
       color: white;
-      font-family: Arial, sans-serif;
     }
     .login-box {
-      background: #222;
-      padding: 40px;
+      background: #333;
+      padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      box-shadow: 0 0 10px black;
     }
     .login-box h2 {
       margin-bottom: 20px;
-      text-align: center;
     }
-    .login-box input {
+    input {
+      display: block;
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 10px;
+      margin-bottom: 15px;
       border: none;
       border-radius: 5px;
     }
-    .login-box button {
+    button {
       width: 100%;
-      padding: 12px;
-      background: #28a745;
+      padding: 10px;
+      background: #0d6efd;
       color: white;
-      font-weight: bold;
       border: none;
       border-radius: 5px;
+      font-weight: bold;
       cursor: pointer;
     }
-    .login-box button:hover {
-      background: #218838;
+    button:hover {
+      background: #0b5ed7;
     }
   </style>
 </head>
 <body>
-
   <div class="login-box">
     <h2>Login to Dream Wheels</h2>
-    <form onsubmit="return loginUser(event)">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <p id="error" style="color:red; text-align:center;"></p>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    function login() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === 'admin' && pass === 'admin123') {
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid credentials. Try admin/admin123.");
+      }
+    }
+  </script>
 </body>
 </html>
